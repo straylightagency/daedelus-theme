@@ -1,0 +1,22 @@
+{
+    "name": "straylightagency/majestic-theme",
+    "description": "Handle the WordPress theme for Majestic",
+    "type": "lib",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=8.3"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anthony Pauwels",
+            "email": "anthony@straylightagency.be",
+            "homepage": "https://straylightagency.be/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Daedelus\\": "/src/Daedelus"
+        }
+    }
+}
