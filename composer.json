@@ -1,5 +1,5 @@
 {
-    "name": "straylightagency/majestic-theme",
+    "name": "daedelus/theme",
     "description": "Handle the WordPress theme for Majestic",
     "type": "lib",
     "minimum-stability": "dev",
@@ -16,7 +16,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Daedelus\\": "/src/Daedelus"
+            "Daedelus\\Theme": "/"
         }
     }
 }
