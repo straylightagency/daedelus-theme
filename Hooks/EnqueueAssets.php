@@ -2,7 +2,7 @@
 namespace Daedelus\Theme\Hooks;
 
 use Daedelus\Support\Actions;
-use Daedelus\Foundation\Hooks\Hook;
+use Daedelus\Framework\Hooks\Hook;
 
 class EnqueueAssets extends Hook
 {

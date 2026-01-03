@@ -2,7 +2,7 @@
 namespace Daedelus\Theme\Hooks;
 
 use Closure;
-use Daedelus\Foundation\Hooks\Hook;
+use Daedelus\Framework\Hooks\Hook;
 use Daedelus\Support\Actions;
 use Daedelus\Support\Filters;
 

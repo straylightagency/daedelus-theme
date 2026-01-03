@@ -1,6 +1,6 @@
 <?php
 
-use Daedelus\Foundation\Application;
+use Daedelus\Framework\Application;
 use Daedelus\Theme\Theme;
 
 if ( basename( $_SERVER['SCRIPT_NAME'] ) === basename( __FILE__ ) ) {

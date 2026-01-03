@@ -2,7 +2,7 @@
 namespace Daedelus\Theme\Hooks;
 
 use Daedelus\Fields\Fields;
-use Daedelus\Foundation\Hooks\Hook;
+use Daedelus\Framework\Hooks\Hook;
 use Daedelus\Support\Actions;
 
 class AutoFlushRules extends Hook

@@ -1,7 +1,7 @@
 <?php
 namespace Daedelus\Theme\Hooks;
 
-use Daedelus\Foundation\Hooks\Hook;
+use Daedelus\Framework\Hooks\Hook;
 use Daedelus\Support\Actions;
 
 class RegisterMenus extends Hook

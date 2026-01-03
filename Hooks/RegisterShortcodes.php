@@ -1,7 +1,7 @@
 <?php
 namespace Daedelus\Theme\Hooks;
 
-use Daedelus\Foundation\Hooks\Hook;
+use Daedelus\Framework\Hooks\Hook;
 use Daedelus\Theme\Config\Shortcode;
 
 class RegisterShortcodes extends Hook
