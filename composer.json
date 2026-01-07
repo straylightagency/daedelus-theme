@@ -1,6 +1,6 @@
 {
     "name": "daedelus/theme",
-    "description": "Handle the WordPress theme for Majestic",
+    "description": "Handle the WordPress theme for Daedelus",
     "type": "lib",
     "minimum-stability": "dev",
     "require": {

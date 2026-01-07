@@ -10,7 +10,7 @@ if ( basename( $_SERVER['SCRIPT_NAME'] ) === basename( __FILE__ ) ) {
 if ( !class_exists( Application::class ) ) {
 	?>
 	<p style="font-family:monospace;margin:20px 10px;">
-		<strong style="color:red;">ERROR:</strong> You need to install Majestic to use this theme. Please follow instructions
+		<strong style="color:red;">ERROR:</strong> You need to install Daedelus to use this theme. Please follow instructions
 		<a href="https://github.com/anthonypauwels/majestic">here</a>
 	</p>
 	<?php
