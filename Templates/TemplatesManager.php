@@ -4,6 +4,7 @@ namespace Daedelus\Theme\Templates;
 
 use Closure;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Daedelus\Fields\Location;
@@ -198,7 +199,7 @@ class TemplatesManager
 				!$request->isMethod('HEAD')
 				|| !Filters::apply('exit_on_http_head', true)
 			)
-            && !$request->get('is_laravel_request')
+            && Route::current()->getName() === 'wordpress'
 			&& !is_robots()
 			&& !is_favicon()
 			&& !is_feed()
