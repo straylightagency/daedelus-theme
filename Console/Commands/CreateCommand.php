@@ -15,7 +15,7 @@ class CreateCommand extends Command
 	 *
 	 * @var string
 	 */
-	protected $signature = 'theme:create {name=majestic}';
+	protected $signature = 'theme:create {name=daedelus}';
 
 	/**
 	 * The console command description.

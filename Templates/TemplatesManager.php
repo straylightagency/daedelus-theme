@@ -175,7 +175,7 @@ class TemplatesManager
 			}
 
 			/** @var View $view */
-			$view = Filters::apply( 'majestic/view', $view );
+			$view = Filters::apply( 'daedelus/view', $view );
 
             if ( !$view ) {
                 throw new UnexpectedValueException( 'No view available for this resource' );
@@ -240,7 +240,7 @@ class TemplatesManager
     {
         $object = get_queried_object();
 
-        $templates = Filters::apply( 'majestic/page_templates', [
+        $templates = Filters::apply( 'daedelus/page_templates', [
             fn () => $this->mapper->findByName( get_page_template_slug( $object ) ),
             fn () => $this->mapper->findByType( $object->post_type ),
             fn () => $this->mapper->findByName( $object->post_type ),
@@ -262,7 +262,7 @@ class TemplatesManager
     {
         $object = get_queried_object();
 
-        $templates = Filters::apply( 'majestic/single_templates', [
+        $templates = Filters::apply( 'daedelus/single_templates', [
             fn () => $this->mapper->findByName( get_page_template_slug( $object ) ),
             fn () => $this->mapper->findByType( $object->post_type ),
             fn () => $this->mapper->findByName( $object->post_type ),
@@ -282,7 +282,7 @@ class TemplatesManager
      */
     protected function getTemplatePrivacyPolicy(): ?View
     {
-        $templates = Filters::apply( 'majestic/privacy_policy_templates', [
+        $templates = Filters::apply( 'daedelus/privacy_policy_templates', [
             fn () => $this->mapper->findByType( 'privacy-policy' ),
             fn () => $this->mapper->findByName( 'privacy-policy' ),
         ] );
@@ -303,7 +303,7 @@ class TemplatesManager
             $wp_query->set_404();
         }
 
-        $templates = Filters::apply( 'majestic/404_templates', [
+        $templates = Filters::apply( 'daedelus/404_templates', [
             fn () => $this->mapper->findByType( '404' ),
             fn () => $this->mapper->findByName( '404' ),
         ] );
@@ -318,7 +318,7 @@ class TemplatesManager
     {
         $post_type = collect( get_query_var( 'post_type' ) )->filter()->first();
 
-        $templates = Filters::apply( 'majestic/archive_templates', [
+        $templates = Filters::apply( 'daedelus/archive_templates', [
             fn () => $this->mapper->findByType( "archive-{$post_type}" ),
             fn () => $this->mapper->findByType( 'archive' ),
         ] );
@@ -343,7 +343,7 @@ class TemplatesManager
      */
     protected function getTemplateHome(): ?View
     {
-        $templates = Filters::apply( 'majestic/home_templates', [
+        $templates = Filters::apply( 'daedelus/home_templates', [
             fn () => $this->mapper->findByType( 'home' ),
             fn () => $this->mapper->findByName( 'home' ),
         ] );
@@ -358,7 +358,7 @@ class TemplatesManager
      */
     protected function getTemplateFrontPage(): ?View
     {
-        $templates = Filters::apply( 'majestic/front_page_templates', [
+        $templates = Filters::apply( 'daedelus/front_page_templates', [
             fn () => $this->mapper->findByType( 'front-page' ),
             fn () => $this->mapper->findByName( 'front-page' ),
         ] );
@@ -373,7 +373,7 @@ class TemplatesManager
      */
     protected function getTemplateTaxonomy(): ?View
     {
-        $templates = Filters::apply( 'majestic/taxonomy_templates', [
+        $templates = Filters::apply( 'daedelus/taxonomy_templates', [
             fn () => $this->mapper->findByType( 'taxonomy' ),
             fn () => $this->mapper->findByName( 'taxonomy' ),
         ] );
@@ -388,7 +388,7 @@ class TemplatesManager
      */
     protected function getTemplateSearch(): ?View
     {
-        $templates = Filters::apply( 'majestic/search_templates', [
+        $templates = Filters::apply( 'daedelus/search_templates', [
             fn () => $this->mapper->findByType( 'search' ),
             fn () => $this->mapper->findByName( 'search' ),
         ] );
@@ -407,7 +407,7 @@ class TemplatesManager
 
         $post_format = get_post_format( $object );
 
-        $templates = Filters::apply( 'majestic/embed_templates', [
+        $templates = Filters::apply( 'daedelus/embed_templates', [
             fn () => $this->mapper->findByType( "embed-{$object->post_type}-{$post_format}" ),
             fn () => $this->mapper->findByType( "embed-{$object->post_type}" ),
             fn () => $this->mapper->findByName( 'embed' ),
@@ -423,7 +423,7 @@ class TemplatesManager
      */
     protected function getTemplateSingular(): ?View
     {
-        $templates = Filters::apply( 'majestic/singular_templates', [
+        $templates = Filters::apply( 'daedelus/singular_templates', [
             fn () => $this->mapper->findByType( 'singular' ),
             fn () => $this->mapper->findByName( 'singular' ),
         ] );
@@ -438,7 +438,7 @@ class TemplatesManager
      */
     protected function getTemplateCategory(): ?View
     {
-        $templates = Filters::apply( 'majestic/category_templates', [
+        $templates = Filters::apply( 'daedelus/category_templates', [
             fn () => $this->mapper->findByType( 'category' ),
             fn () => $this->mapper->findByName( 'category' ),
         ] );
@@ -451,7 +451,7 @@ class TemplatesManager
      */
     protected function getTemplateTag(): ?View
     {
-        $templates = Filters::apply( 'majestic/tag_templates', [
+        $templates = Filters::apply( 'daedelus/tag_templates', [
             fn () => $this->mapper->findByType( 'tag' ),
             fn () => $this->mapper->findByName( 'tag' ),
         ] );
@@ -466,7 +466,7 @@ class TemplatesManager
      */
     protected function getTemplateAuthor(): ?View
     {
-        $templates = Filters::apply( 'majestic/author_templates', [
+        $templates = Filters::apply( 'daedelus/author_templates', [
             fn () => $this->mapper->findByType( 'author' ),
             fn () => $this->mapper->findByName( 'author' ),
         ] );
@@ -481,7 +481,7 @@ class TemplatesManager
      */
     protected function getTemplateDate(): ?View
     {
-        $templates = Filters::apply( 'majestic/date_templates', [
+        $templates = Filters::apply( 'daedelus/date_templates', [
             fn () => $this->mapper->findByType( 'date' ),
             fn () => $this->mapper->findByName( 'date' ),
         ] );
@@ -504,7 +504,7 @@ class TemplatesManager
             $mimetype = str_replace( '/', '-', $object->post_mime_type );
         }
 
-        $templates = Filters::apply( 'majestic/attachment_templates', [
+        $templates = Filters::apply( 'daedelus/attachment_templates', [
             fn () => $this->mapper->findByType( "attachment-{$mimetype}" ),
             fn () => $this->mapper->findByName( 'attachment' ),
         ] );
@@ -519,7 +519,7 @@ class TemplatesManager
      */
     protected function getTemplateDefault(): ?View
     {
-        $templates = Filters::apply( 'majestic/default_templates', [
+        $templates = Filters::apply( 'daedelus/default_templates', [
             fn () => $this->mapper->findByType( 'default' ),
             fn () => $this->mapper->findByName( 'default' ),
         ] );

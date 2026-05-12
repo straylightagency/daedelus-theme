@@ -11,7 +11,7 @@ if ( !class_exists( Application::class ) ) {
 	?>
 	<p style="font-family:monospace;margin:20px 10px;">
 		<strong style="color:red;">ERROR:</strong> You need to install Daedelus to use this theme. Please follow instructions
-		<a href="https://github.com/anthonypauwels/majestic">here</a>
+		<a href="https://github.com/straylightagency/daedelus">here</a>
 	</p>
 	<?php
 	exit;
