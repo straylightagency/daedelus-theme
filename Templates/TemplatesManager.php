@@ -23,48 +23,48 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class TemplatesManager
 {
-	/** @var array */
-	protected array $paths = [];
+    /** @var array */
+    protected array $paths = [];
 
     /** @var TemplatesMapper */
-	protected TemplatesMapper $mapper;
+    protected TemplatesMapper $mapper;
 
-	/**
-	 * @param ViewScanner $scanner
-	 */
-	public function __construct(
+    /**
+     * @param ViewScanner $scanner
+     */
+    public function __construct(
         protected ViewScanner $scanner
     ){
-		$this->mapper = new TemplatesMapper( $this->scanner );
-	}
+        $this->mapper = new TemplatesMapper( $this->scanner );
+    }
 
-	/**
+    /**
      * Set a new templates path
      *
-	 * @param string|null $path
-	 *
-	 * @return self
-	 */
-	public function path(?string $path = null): self
-	{
-		$path = realpath( $path ?: config('view.paths')[0] . '/templates' );
+     * @param string|null $path
+     *
+     * @return self
+     */
+    public function path(?string $path = null): self
+    {
+        $path = realpath( $path ?: config('view.paths')[0] . '/templates' );
 
-		if ( !is_dir( $path ) ) {
-			throw new InvalidArgumentException( sprintf( 'The given path " %s " is not a directory.', $path ) );
-		}
+        if ( !is_dir( $path ) ) {
+            throw new InvalidArgumentException( sprintf( 'The given path " %s " is not a directory.', $path ) );
+        }
 
-		$this->paths[] = $path;
+        $this->paths[] = $path;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
+    /**
      * Load templates from the mapper and initialize them into WordPress with fields, filters, etc.
      *
-	 * @return void
-	 */
-	public function loadTemplates():void
-	{
+     * @return void
+     */
+    public function loadTemplates():void
+    {
         /**
          * Collect templates from each path with the mapper object
          */
@@ -73,9 +73,9 @@ class TemplatesManager
             collect()
         );
 
-		$templates_by_type = $theme_templates->groupBy( 'type', preserveKeys: true );
+        $templates_by_type = $theme_templates->groupBy( 'type', preserveKeys: true );
 
-		foreach ( $templates_by_type as $post_type => $templates ) {
+        foreach ( $templates_by_type as $post_type => $templates ) {
             if ( $post_type === 404 ) {
                 continue;
             }
@@ -87,30 +87,30 @@ class TemplatesManager
              */
             if ( count( $templates ) > 1 ) {
                 Filters::add('theme_' . $post_type . '_templates', fn () =>
-                    $templates->map( fn ( $template ) => $template->name )->filter( fn (string $value, string $key) => $key !== 'default' )->toArray(),
+                $templates->map( fn ( $template ) => $template->name )->filter( fn (string $value, string $key) => $key !== 'default' )->toArray(),
                     99
                 );
             }
 
-			foreach ( $templates as $template ) {
-				if ( $template->fields ) {
-					$location = Location::make( $template->name, $template->name );
+            foreach ( $templates as $template ) {
+                if ( $template->fields ) {
+                    $location = Location::make( $template->name, $template->name );
 
-					$fields = ( $template->fields )( $location );
+                    $fields = ( $template->fields )( $location );
 
-					if ( is_array( $fields ) && !empty( $fields ) ) {
-						$location->fields( $fields );
-					}
+                    if ( is_array( $fields ) && !empty( $fields ) ) {
+                        $location->fields( $fields );
+                    }
 
-					if ( $post_type ) {
-						$location->andPageTemplate( Str::before( basename( $template->path ), '.' ) );
-					} else {
-						$location->andPostType( $template->type );
-					}
-				}
-			}
-		}
-	}
+                    if ( $post_type ) {
+                        $location->andPageTemplate( Str::before( basename( $template->path ), '.' ) );
+                    } else {
+                        $location->andPostType( $template->type );
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Do the template redirect over the WordPress basic behavior
@@ -118,94 +118,94 @@ class TemplatesManager
      * @param Request $request
      * @return Closure
      */
-	public function templateRedirect(Request $request): Closure
-	{
-		return function () use ( $request ) {
-			if ( !$this->mainQueryTemplateAllowed( $request ) ) {
-				return;
-			}
+    public function templateRedirect(Request $request): Closure
+    {
+        return function () use ( $request ) {
+            if ( !$this->mainQueryTemplateAllowed( $request ) ) {
+                return;
+            }
 
             /**
              * Bypass WordPress behavior
              */
-			Filters::add('wp_using_themes', fn () => false, 99 );
+            Filters::add('wp_using_themes', fn () => false, 99 );
 
-			$methods = [
-				'is_embed'             => fn () => $this->getTemplateEmbed(),
-				'is_404'               => fn () => $this->getTemplate404(),
-				'is_search'            => fn () => $this->getTemplateSearch(),
-				'is_front_page'        => fn () => $this->getTemplateFrontPage(),
-				'is_home'              => fn () => $this->getTemplateHome(),
-				'is_privacy_policy'    => fn () => $this->getTemplatePrivacyPolicy(),
-				'is_post_type_archive' => fn () => $this->getTemplatePostTypeArchive(),
-				'is_tax'               => fn () => $this->getTemplateTaxonomy(),
-				'is_attachment'        => fn () => $this->getTemplateAttachment(),
-				'is_single'            => fn () => $this->getTemplateSingle(),
-				'is_page'              => fn () => $this->getTemplatePage(),
-				'is_singular'          => fn () => $this->getTemplateSingular(),
-				'is_category'          => fn () => $this->getTemplateCategory(),
-				'is_tag'               => fn () => $this->getTemplateTag(),
-				'is_author'            => fn () => $this->getTemplateAuthor(),
-				'is_date'              => fn () => $this->getTemplateDate(),
-				'is_archive'           => fn () => $this->getTemplateArchive(),
-			];
+            $methods = [
+                'is_embed'             => fn () => $this->getTemplateEmbed(),
+                'is_404'               => fn () => $this->getTemplate404(),
+                'is_search'            => fn () => $this->getTemplateSearch(),
+                'is_front_page'        => fn () => $this->getTemplateFrontPage(),
+                'is_home'              => fn () => $this->getTemplateHome(),
+                'is_privacy_policy'    => fn () => $this->getTemplatePrivacyPolicy(),
+                'is_post_type_archive' => fn () => $this->getTemplatePostTypeArchive(),
+                'is_tax'               => fn () => $this->getTemplateTaxonomy(),
+                'is_attachment'        => fn () => $this->getTemplateAttachment(),
+                'is_single'            => fn () => $this->getTemplateSingle(),
+                'is_page'              => fn () => $this->getTemplatePage(),
+                'is_singular'          => fn () => $this->getTemplateSingular(),
+                'is_category'          => fn () => $this->getTemplateCategory(),
+                'is_tag'               => fn () => $this->getTemplateTag(),
+                'is_author'            => fn () => $this->getTemplateAuthor(),
+                'is_date'              => fn () => $this->getTemplateDate(),
+                'is_archive'           => fn () => $this->getTemplateArchive(),
+            ];
 
             $view = null;
 
             try {
-				foreach ( $methods as $tag => $template_method ) {
-					if ( call_user_func( $tag ) ) {
-						$view = $template_method();
-					}
+                foreach ( $methods as $tag => $template_method ) {
+                    if ( call_user_func( $tag ) ) {
+                        $view = $template_method();
+                    }
 
-					if ( $view ) {
-						if ( 'is_attachment' === $tag ) {
-							Filters::remove( 'the_content', 'prepend_attachment' );
-						}
+                    if ( $view ) {
+                        if ( 'is_attachment' === $tag ) {
+                            Filters::remove( 'the_content', 'prepend_attachment' );
+                        }
 
-						break;
-					}
-				}
-			} catch ( MethodNotAllowedHttpException | NotFoundHttpException $exception ) {
-				$view = $this->getTemplate404();
-			}
+                        break;
+                    }
+                }
+            } catch ( MethodNotAllowedHttpException | NotFoundHttpException $exception ) {
+                $view = $this->getTemplate404();
+            }
 
-			if ( !$view ) {
-				$view = $this->getTemplateDefault();
-			}
+            if ( !$view ) {
+                $view = $this->getTemplateDefault();
+            }
 
-			/** @var View $view */
-			$view = Filters::apply( 'daedelus/view', $view );
+            /** @var View $view */
+            $view = Filters::apply( 'daedelus/view', $view );
 
             if ( !$view ) {
                 throw new UnexpectedValueException( 'No view available for this resource' );
             }
 
-			echo $view->render();
-		};
-	}
+            echo $view->render();
+        };
+    }
 
-	/**
+    /**
      * Check if the request needs a template or not
      *
-	 * @param Request $request
-	 *
-	 * @return bool
-	 */
-	protected function mainQueryTemplateAllowed(Request $request): bool
-	{
-		return
-			(
-				!$request->isMethod('HEAD')
-				|| !Filters::apply('exit_on_http_head', true)
-			)
-            && ( Route::current() && Route::current()->getName() === 'wordpress' )
-			&& !is_robots()
-			&& !is_favicon()
-			&& !is_feed()
-			&& !is_trackback()
-			&& !is_embed();
-	}
+     * @param Request $request
+     *
+     * @return bool
+     */
+    protected function mainQueryTemplateAllowed(Request $request): bool
+    {
+        return
+            (
+                !$request->isMethod('HEAD')
+                || !Filters::apply('exit_on_http_head', true)
+            )
+            && ( Route::current() !== null && Route::current()->getName() === 'wordpress' )
+            && !is_robots()
+            && !is_favicon()
+            && !is_feed()
+            && !is_trackback()
+            && !is_embed();
+    }
 
     /**
      * Transform the right template into a renderable Blade View
