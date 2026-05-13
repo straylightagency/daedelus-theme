@@ -199,7 +199,7 @@ class TemplatesManager
 				!$request->isMethod('HEAD')
 				|| !Filters::apply('exit_on_http_head', true)
 			)
-            && Route::current()->getName() === 'wordpress'
+            && ( Route::current() && Route::current()->getName() === 'wordpress' )
 			&& !is_robots()
 			&& !is_favicon()
 			&& !is_feed()
