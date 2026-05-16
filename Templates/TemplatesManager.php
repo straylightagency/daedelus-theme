@@ -3,17 +3,16 @@
 namespace Daedelus\Theme\Templates;
 
 use Closure;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Daedelus\Fields\Location;
 use InvalidArgumentException;
-use UnexpectedValueException;
 use Daedelus\Support\Filters;
 use Daedelus\Theme\ViewScanner;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View as ViewFacade;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -49,7 +48,7 @@ class TemplatesManager
     {
         $path = realpath( $path ?: config('view.paths')[0] . '/templates' );
 
-        if ( !is_dir( $path ) ) {
+        if ( ! is_dir( $path ) ) {
             throw new InvalidArgumentException( sprintf( 'The given path " %s " is not a directory.', $path ) );
         }
 
@@ -170,15 +169,15 @@ class TemplatesManager
                 $view = $this->getTemplate404();
             }
 
-            if ( !$view ) {
+            if ( ! $view ) {
                 $view = $this->getTemplateDefault();
             }
 
             /** @var View $view */
             $view = Filters::apply( 'daedelus/view', $view );
 
-            if ( !$view ) {
-                throw new UnexpectedValueException( 'No view available for this resource' );
+            if ( ! $view ) {
+                throw new NotFoundHttpException('No view available for this resource.');
             }
 
             echo $view->render();
@@ -196,15 +195,15 @@ class TemplatesManager
     {
         return
             (
-                !$request->isMethod('HEAD')
-                || !Filters::apply('exit_on_http_head', true)
+                ! $request->isMethod('HEAD')
+                || ! Filters::apply('exit_on_http_head', true)
             )
             && ( Route::current() !== null && Route::current()->getName() === 'wordpress' )
-            && !is_robots()
-            && !is_favicon()
-            && !is_feed()
-            && !is_trackback()
-            && !is_embed();
+            && ! is_robots()
+            && ! is_favicon()
+            && ! is_feed()
+            && ! is_trackback()
+            && ! is_embed();
     }
 
     /**
