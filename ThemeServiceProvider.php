@@ -2,12 +2,12 @@
 
 namespace Daedelus\Theme;
 
-use Daedelus\Theme\Admin\AdminManager;
 use Daedelus\Theme\Ajax\AjaxManager;
-use Daedelus\Theme\Console\Commands\CreateCommand;
+use Daedelus\Theme\Admin\AdminManager;
 use Daedelus\Theme\Pages\PagesManager;
-use Daedelus\Theme\Templates\TemplatesManager;
 use Illuminate\Support\ServiceProvider;
+use Daedelus\Theme\Templates\TemplatesManager;
+use Daedelus\Theme\Console\Commands\CreateCommand;
 
 /**
  *
@@ -41,6 +41,10 @@ class ThemeServiceProvider extends ServiceProvider
 	{
 		return [
 			ViewScanner::class,
+            PagesManager::class,
+            TemplatesManager::class,
+            AdminManager::class,
+            AjaxManager::class,
 		];
 	}
 }

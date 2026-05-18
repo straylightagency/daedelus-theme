@@ -2,9 +2,9 @@
 
 namespace Daedelus\Theme;
 
-use Daedelus\Theme\Templates\TemplatesManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Facade;
+use Daedelus\Theme\Templates\TemplatesManager;
 
 /**
  * @method static TemplatesManager path(string $path)

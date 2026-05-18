@@ -3,11 +3,11 @@
 namespace Daedelus\Theme;
 
 use Closure;
-use Daedelus\Theme\Admin\Action;
-use Daedelus\Theme\Admin\AdminManager;
 use Daedelus\Theme\Admin\Page;
+use Daedelus\Theme\Admin\Action;
 use Daedelus\Theme\Admin\Subpage;
 use Illuminate\Support\Facades\Facade;
+use Daedelus\Theme\Admin\AdminManager;
 
 /**
  * @method static void register()

@@ -25,7 +25,7 @@ class PagesManager
 	public function __construct(
         protected ViewScanner $scanner,
         protected array $paths = []
-    ){
+    ) {
 	}
 
 	/**

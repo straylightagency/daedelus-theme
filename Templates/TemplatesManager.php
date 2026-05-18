@@ -72,7 +72,7 @@ class TemplatesManager
             collect()
         );
 
-        $templates_by_type = $theme_templates->groupBy( 'type', preserveKeys: true );
+        $templates_by_type = $theme_templates->groupBy( groupBy: 'type', preserveKeys: true );
 
         foreach ( $templates_by_type as $post_type => $templates ) {
             if ( $post_type === 404 ) {
@@ -97,7 +97,7 @@ class TemplatesManager
 
                     $fields = ( $template->fields )( $location );
 
-                    if ( is_array( $fields ) && !empty( $fields ) ) {
+                    if ( is_array( $fields ) && ! empty( $fields ) ) {
                         $location->fields( $fields );
                     }
 
@@ -120,7 +120,7 @@ class TemplatesManager
     public function templateRedirect(Request $request): Closure
     {
         return function () use ( $request ) {
-            if ( !$this->mainQueryTemplateAllowed( $request ) ) {
+            if ( ! $this->mainQueryTemplateAllowed( $request ) ) {
                 return;
             }
 
@@ -177,10 +177,10 @@ class TemplatesManager
             $view = Filters::apply( 'daedelus/view', $view );
 
             if ( ! $view ) {
-                throw new NotFoundHttpException('No view available for this resource.');
+                abort_if( ! ( $view = $this->getTemplate404() ), 404, 'No view available for this resource.' );
             }
 
-            echo $view->render();
+            Filters::add( 'daedelus/render', fn () => $view->render() );
         };
     }
 
@@ -198,7 +198,7 @@ class TemplatesManager
                 ! $request->isMethod('HEAD')
                 || ! Filters::apply('exit_on_http_head', true)
             )
-            && ( Route::current() !== null && Route::current()->getName() === 'wordpress' )
+            && ( app()->isHandlingWordPress() )
             && ! is_robots()
             && ! is_favicon()
             && ! is_feed()
@@ -219,11 +219,11 @@ class TemplatesManager
             if ( $template = $callback() ) {
                 $metadata = $this->scanner->getMetadata( $template->path );
 
-                return (function (...$args) use ( $metadata, $template ) {
+                return ( function (...$args) use ( $metadata, $template ) {
                     $buffer = array_reduce( $metadata->renders, fn ($buffer, $render) => array_merge( $buffer, $render( ...$args ) ), [] );
 
                     return ViewFacade::file( $template->path, $buffer );
-                })( $object );
+                } )( $object );
             }
         }
 

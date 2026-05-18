@@ -12,9 +12,6 @@ class ViewScanner
 	/** @var bool */
 	protected bool $listening = false;
 
-	/** @var bool */
-	protected bool $rendering = false;
-
 	/** @var array  */
 	protected array $cache = [];
 
@@ -88,7 +85,7 @@ class ViewScanner
 	 */
 	public function whenRendering(Closure $closure):void
 	{
-		if ( !$this->listening ) {
+		if ( ! $this->listening ) {
 			$closure();
 		}
 	}

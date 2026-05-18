@@ -1,7 +1,7 @@
 <?php
 
-use Daedelus\Framework\Application;
 use Daedelus\Theme\Theme;
+use Daedelus\Framework\Application;
 
 if ( basename( $_SERVER['SCRIPT_NAME'] ) === basename( __FILE__ ) ) {
 	die(); /** trying to access directly from URL */

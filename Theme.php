@@ -21,8 +21,7 @@ class Theme
 	public function __construct(
 		protected ApplicationContract $app,
 		protected TemplatesManager $templates,
-		protected PagesManager $pages,
-		protected ViewScanner $scanner
+		protected PagesManager $pages
 	) {
 	}
 
